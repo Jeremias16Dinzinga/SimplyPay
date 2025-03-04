@@ -1,0 +1,24 @@
+package com.sweet_company.simplyPay.services;
+
+import com.sweet_company.simplyPay.domain.user.TypeUser;
+import com.sweet_company.simplyPay.domain.user.UserEntity;
+import com.sweet_company.simplyPay.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+
+@Service
+public class UserService {
+    @Autowired
+    private UserRepository userRepository;
+
+    public void transactionValidation(UserEntity sender, BigDecimal amount) throws Exception {
+        if(sender.getTypeUser()== TypeUser.MERCHANT){
+            throw new Exception("O tipode usuário não autorisado a realizar transação");
+        }
+        if (sender.getBalance().compareTo(amount)<0){
+            throw new Exception("Saldo insuficiente");
+        }
+    }
+}
