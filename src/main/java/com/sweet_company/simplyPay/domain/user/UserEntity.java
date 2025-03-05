@@ -1,17 +1,13 @@
 package com.sweet_company.simplyPay.domain.user;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @EqualsAndHashCode(of="id")
 public class UserEntity {
@@ -24,7 +20,6 @@ public class UserEntity {
     private String document;
     @Column(unique = true)
     private String email;
-    @Column(unique = true)
     private String password;
     private BigDecimal balance;
     @Enumerated(EnumType.STRING)

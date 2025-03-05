@@ -21,4 +21,10 @@ public class UserService {
             throw new Exception("Saldo insuficiente");
         }
     }
+    public UserEntity findUserById(Long id) throws Exception {
+        return this.userRepository.findById(id).orElseThrow(()-> new Exception("Usuário não existe"));
+    }
+    public void saveUser(UserEntity user){
+    this.userRepository.save(user);
+    }
 }
