@@ -23,8 +23,10 @@ public class TransactionService {
     private UserService userService;
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private NotificationService notificationService;
 
-    public void createTransaction(TransactionDto transactionDto) throws Exception {
+    public TransactionEntity createTransaction(TransactionDto transactionDto) throws Exception {
         UserEntity sender = this.userService.findUserById(transactionDto.senderId());
         UserEntity receiver = this.userService.findUserById(transactionDto.receiverId());
         this.userService.transactionValidation(sender,transactionDto.amount());
@@ -44,6 +46,11 @@ public class TransactionService {
         transactionRepository.save(transaction);
         userService.saveUser(sender);
         userService.saveUser(receiver);
+
+        notificationService.sendNotification(sender,"Enviaste "+transactionDto.amount()+"€ Para "+ receiver.getFirstName()+" "+receiver.getLastName());
+        notificationService.sendNotification(receiver,sender.getFirstName()+" "+sender.getLastName()+" enviou "+ transactionDto.amount()+"€ para ti.");
+
+        return transaction;
     }
     private boolean authorized(UserEntity sender, BigDecimal amount) {
         ResponseEntity<Map> authorizeResponse = restTemplate.getForEntity("https://util.devi.tools/api/v2/authorize", Map.class);
