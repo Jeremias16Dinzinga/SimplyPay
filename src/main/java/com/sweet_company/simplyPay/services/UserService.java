@@ -15,12 +15,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void transactionValidation(UserEntity sender, BigDecimal amount) throws Exception {
+    public void transactionAccess(UserEntity sender) throws Exception {
         if(sender.getTypeUser()== TypeUser.MERCHANT){
             throw new Exception("O tipode usuário não autorisado a realizar transação");
-        }
-        if (sender.getBalance().compareTo(amount)<0){
-            throw new Exception("Saldo insuficiente");
         }
     }
     public UserEntity findUserById(Long id) throws Exception {
