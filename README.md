@@ -47,18 +47,20 @@ SimplyPay is a simplified payment platform that allows money transfers between u
   ```json
   {
     "amount": 100.0,
-    "sender": 4,
-    "receiver": 15
+    "senderId": 2,
+    "receiverId": 1
   }
   ```
 * **POST /users** - Register a new user
   ```json
   {
-    "fullName": "John Doe",
-    "Nif": "324264130",
+    "firstName": "Jeremias",
+    "lastName": "Dinzinga",
+    "document": "324264130",
     "email": "jeremias@email.com",
     "password": "securePass123",
-    "userType": "COMMON"
+    "balance": 2000,
+    "typeUser": "COMMON"
   }
   ```
 * **GET /users/{id}** - Retrieve user details
